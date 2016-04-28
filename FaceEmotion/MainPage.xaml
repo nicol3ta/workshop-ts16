@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="FaceEmotion.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FaceEmotion"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid Height="90" x:Name="LogoStackPanel"
+              Background="#0078D7"
+              RelativePanel.AlignRightWithPanel="True"
+              RelativePanel.AlignLeftWithPanel="True">
+
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Left"
+                        Margin="20,4,0,0">
+                <Image Height="24"
+                       Margin="2,0,0,0"
+                       HorizontalAlignment="Left"
+                       Source="Images/microsoftLogo.png" />
+                <TextBlock Text="Cognitive Serivces"
+                           FontSize="26"
+                           Foreground="WhiteSmoke"></TextBlock>
+                <TextBlock Text="Face and Emotion Detection"
+                           FontSize="18"
+                           Foreground="WhiteSmoke"></TextBlock>
+            </StackPanel>
+        </Grid>
+        <Grid RelativePanel.AlignLeftWith="LogoStackPanel"
+              RelativePanel.Below="LogoStackPanel">
+           
+            <Image x:Name="FacePhoto"
+                   Width="600"
+                   Height="800"
+                   Margin="20,10,40,44"
+                   Stretch="Uniform"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left" />
+            
+            <Canvas Name="FacesCanvas"
+                    Margin="20,10,40,44" />
+            
+            <Button x:Name="BrowseButton"
+                Margin="20,5,0,10"
+                Height="32"
+                VerticalAlignment="Bottom"
+                Content="Browse..."
+                Click="BrowseButton_Click" />
+        </Grid>
+    </RelativePanel>
+</Page>
