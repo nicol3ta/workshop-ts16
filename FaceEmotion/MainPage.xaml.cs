@@ -22,15 +22,13 @@ using System.Linq;
 
 namespace FaceEmotion
 {
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
+
     public sealed partial class MainPage : Page
     {
-        //Create Project Oxford Face API Service client
-        private readonly FaceServiceClient faceServiceClient = new FaceServiceClient("897c6563d3d54d418a11ffb84fa68e32");
-        //Create Project Oxford Emotion API Service client
-        private readonly EmotionServiceClient emotionServiceClient = new EmotionServiceClient("7bd4c9b319ab4adbbaa0495de7a1d6a8");
+        //Create Cognitive Services Face API Service client
+        private readonly FaceServiceClient faceServiceClient = new FaceServiceClient("YOUR KEY");
+        //Create Cognitive Services Emotion API Service client
+        private readonly EmotionServiceClient emotionServiceClient = new EmotionServiceClient("YOUR KEY");
 
         private double scale;
 
