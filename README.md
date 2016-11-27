@@ -91,7 +91,7 @@ private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient("Y
 ```csharp
 
 private async void BrowseButton_Click(object sender, RoutedEventArgs e)
-n        {
+         {
             //Upload picture 
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
@@ -168,3 +168,55 @@ List<MyFaceModel> faces = await DetectFaces(s.AsStream());
 var t = await file.OpenAsync(FileAccessMode.Read);
 DrawFaces(faces);
 ```
+
+* We can now create the method DrawFaces to mark the faces in the image
+
+```csharp
+        /// <summary>
+        /// Highlight the faces and display estimated age, gender and emotion.
+        /// </summary>
+        /// <param name="faces">The faces detected in the image</param>
+        /// <param name="emotions">The emotions detected in the image</param>
+        private void DrawFaces(List<MyFaceModel> faces)
+        {
+            //Check if the are any faces in this image
+            if (faces != null)
+            {
+                //For each detected face 
+                for (int i = 0; i < faces.Count; i++)
+                {
+                    Debug.WriteLine("Age: " + faces[i].Age);
+                    Debug.WriteLine("Gender: " + faces[i].Gender);
+                    Rectangle faceBoundingBox = new Rectangle();
+
+                    //Set bounding box stroke properties 
+                    faceBoundingBox.StrokeThickness = 3;
+
+                    //Highlight the first face in the set 
+                    faceBoundingBox.Stroke = (i == 0 ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.DeepSkyBlue));
+                    if (scale == 0)
+                    {
+                        scale = 1;
+                    }
+                    faceBoundingBox.Margin = new Thickness(faces[i].FaceRect.Left * scale, faces[i].FaceRect.Top * scale, faces[i].FaceRect.Height * scale, faces[i].FaceRect.Width * scale);
+                    faceBoundingBox.Width = faces[i].FaceRect.Width * scale;
+                    faceBoundingBox.Height = faces[i].FaceRect.Height * scale;
+                    TextBlock age = new TextBlock();
+                    var predictedAge = Convert.ToInt32(faces[i].Age);
+
+                    age.Text = faces[i].Gender + ", " + predictedAge;
+                    age.Margin = new Thickness(faces[i].FaceRect.Left * scale, (faces[i].FaceRect.Top * scale) - 20, faces[i].FaceRect.Height * scale, faces[i].FaceRect.Width * scale);
+                    age.Foreground = (i == 0 ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.DeepSkyBlue));
+                    //Add grid to canvas containing all face UI objects 
+                    FacesCanvas.Children.Add(faceBoundingBox);
+                    FacesCanvas.Children.Add(age);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("No faces identified");
+            }
+        }
+
+```
+
