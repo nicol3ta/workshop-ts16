@@ -5,7 +5,7 @@ This sample app provides an example on how to use the Face and Emotion APIs from
 
 * If you haven't already, install Visual Studio 2015. 
 In Visual Studio, on the File menu, click New Project.
-In the Installed Templates list, select C# as your programming language and choose the Blank Application template.
+nIn the Installed Templates list, select C# as your programming language and choose the Blank Application template.
 Name the project as you wish and press enter to create it.
 
 * First let's create the interface. In MainPage.xaml replace the automatically generated Grid with this RelativePanel.
@@ -15,16 +15,15 @@ Name the project as you wish and press enter to create it.
 
         <Grid Height="90" x:Name="LogoStackPanel"
               Background="#0078D7"
-              RelativePanel.AlignRightWithPanel="True"
-              RelativePanel.AlignLeftWithPanel="True">
+             RelativePanel.AlignRightWithPanel="True"
+             RelativePanel.AlignLeftWithPanel="True">
 
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Left"
                         Margin="20,4,0,0">
                 <Image Height="24"
                        Margin="2,0,0,0"
-
-HorizontalAlignment="Left"
+                       HorizontalAlignment="Left"
                        Source="Images/microsoftLogo.png" />
                 <TextBlock Text="Cognitive Serivces"
                            FontSize="26"
@@ -35,7 +34,7 @@ HorizontalAlignment="Left"
             </StackPanel>
         </Grid>
         <Grid RelativePanel.AlignLeftWith="LogoStackPanel"
-               RelativePanel.Below="LogoStackPanel">
+              RelativePanel.Below="LogoStackPanel">
            
             <Image x:Name="FacePhoto"
                    Width="600"
@@ -45,7 +44,7 @@ HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left" />
             
-`            <Canvas Name="FacesCanvas"
+            <Canvas Name="FacesCanvas"
                     Margin="20,10,40,44" />
             
             <Button x:Name="BrowseButton"
@@ -55,9 +54,9 @@ HorizontalAlignment="Left"
                 Content="Browse..."
                 Click="BrowseButton_Click" />
         </Grid>
-`    </RelativePanel>
-    
+    </RelativePanel>
 ```
+
 * As you can see we have a simple interface with a banner and a button for choosing a picture. 
 For the banner we need the Microsoft logo. Simply create a new folder, call it "Images", and copy there the microsoftLogo.png, which you can find in this repo.
 
@@ -74,13 +73,12 @@ using Microsoft.ProjectOxford.Face;
 
 ```csharp
 class MyFaceModel
-/    {
+{
         public object Age { get; internal set; }
         public string FaceId { get; internal set; }
         public FaceRectangle FaceRect { get; internal set; }
-
-public object Gender { get; internal set; }
-    }
+        public object Gender { get; internal set; }
+}
 ```
 * Back in the MainWindow class insert the following code: 
 ```csharp 
@@ -93,7 +91,7 @@ private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient("Y
 ```csharp
 
 private async void BrowseButton_Click(object sender, RoutedEventArgs e)
-        {
+n        {
             //Upload picture 
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
@@ -122,22 +120,8 @@ private async void BrowseButton_Click(object sender, RoutedEventArgs e)
         }
 ```
 
-* ss
+* Now we can create the method DetectFaces. The most straightforward way to detect faces is by calling the Face - Detect API by uploading the image file directly. When using the client library, this can be done by using an asynchronous method DetectAsync of FaceServiceClient. 
 
-```csharp
-//Remove any existing rectangles from previous events 
-FacesCanvas.Children.Clear();
-
-//DetectFaces
-var s = await file.OpenAsync(FileAccessMode.Read);
-List<MyFaceModel> faces = await DetectFaces(s.AsStream());
-var t = await file.OpenAsync(FileAccessMode.Read);
-//Detect emotions
-Emotion[] emotions = await DetectEmotions(t.AsStream());
-DrawFaces(faces, emotions);
-```
-
-* Now we can create the method DetectFaces()
 ```csharp
         private async Task<List<MyFaceModel>> DetectFaces(Stream imageStream)
         {
@@ -171,4 +155,16 @@ DrawFaces(faces, emotions);
             }
             return collection;
         }
+```
+* Let's replace now the //TODO comment in the BrowseButton_Click method with the following code snippet. We're basically calling the DetectFaces and the DrawFaces methods after the user chose the picture to analyse.
+
+```csharp
+//Remove any existing rectangles from previous events 
+FacesCanvas.Children.Clear();
+
+//DetectFaces
+var s = await file.OpenAsync(FileAccessMode.Read);
+List<MyFaceModel> faces = await DetectFaces(s.AsStream());
+var t = await file.OpenAsync(FileAccessMode.Read);
+DrawFaces(faces);
 ```
