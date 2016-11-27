@@ -120,6 +120,12 @@ private async void BrowseButton_Click(object sender, RoutedEventArgs e)
         }
 ```
 
+* We also need to add a variable for scaling the image so that it is displayed correctly.
+
+```csharp
+private double scale;
+```
+
 * Now we can create the method DetectFaces. The most straightforward way to detect faces is by calling the Face - Detect API by uploading the image file directly. When using the client library, this can be done by using an asynchronous method DetectAsync of FaceServiceClient. 
 
 ```csharp
@@ -220,3 +226,120 @@ DrawFaces(faces);
 
 ```
 
+* We can run the program and test it. We're able now to browse for a photo and display it in the window. The faces in the picture are automatically detected and marked.
+
+* Next step is to detect also the emotions of the people in this photo.  
+
+* First of all we need to reference to add the nuget package for Emotion to the project and add the reference to it in the MainWindow class.
+
+```csharp
+using Microsoft.ProjectOxford.Emotion.Contract;
+``` 
+
+* Insert the following code in the MainWindow class and replace the text with your subscription key. 
+```csharp
+private readonly EmotionServiceClient emotionServiceClient = new EmotionServiceClient("Your subscription key");  
+``` 
+
+* We add a method DetectEmotions 
+```csharp
+        private async Task<Emotion[]> DetectEmotions(Stream imageStream)
+        {
+            try
+            {
+                Emotion[] emotionResult = await emotionServiceClient.RecognizeAsync(imageStream);
+                return emotionResult;
+            }          
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                return null;
+            }
+        }
+``` 
+
+* We only want the emotion with the highest probability, that's why we implet a method GetEmotion which returns the most likely idetnified emotion.
+```csharp
+private Dictionary<float,string> GetEmotions(Emotion emotion)
+        {
+            var emotions = new Dictionary<float, string>();
+            emotions.Add(emotion.Scores.Happiness, "happy");
+            emotions.Add(emotion.Scores.Neutral, "neutral");
+            emotions.Add(emotion.Scores.Sadness, "sad");
+            emotions.Add(emotion.Scores.Surprise, "surprised");
+            emotions.Add(emotion.Scores.Fear, "scared");
+            emotions.Add(emotion.Scores.Disgust, "disgusted");
+            emotions.Add(emotion.Scores.Contempt, "contemptuous");
+            emotions.Add(emotion.Scores.Anger, "angry");
+            
+            return emotions;
+        }
+``` 
+
+* Let's modify the DrawFaces method so it also displays the recognized emotions.
+
+```csharp
+        private void DrawFaces(List<MyFaceModel> faces, Emotion[] emotions)
+        {
+            //Check if the are any faces in this image
+            if (faces != null)
+            {
+                //For each detected face 
+                for (int i = 0; i < faces.Count; i++)
+                {
+                    Debug.WriteLine("Age: " + faces[i].Age);
+                    Debug.WriteLine("Gender: " + faces[i].Gender);
+                    Debug.WriteLine("Emotion: " + emotions[i].Scores.Happiness);
+                    Rectangle faceBoundingBox = new Rectangle();
+
+                    //Set bounding box stroke properties 
+                    faceBoundingBox.StrokeThickness = 3;
+
+                    //Highlight the first face in the set 
+                    faceBoundingBox.Stroke = (i == 0 ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.DeepSkyBlue));
+                    if (scale == 0)
+                    {
+                        scale = 1;
+                    }
+                    faceBoundingBox.Margin = new Thickness(faces[i].FaceRect.Left * scale, faces[i].FaceRect.Top * scale, faces[i].FaceRect.Height * scale, faces[i].FaceRect.Width * scale);
+                    faceBoundingBox.Width = faces[i].FaceRect.Width * scale;
+                    faceBoundingBox.Height = faces[i].FaceRect.Height * scale;
+                    TextBlock age = new TextBlock();
+                    var predictedAge = Convert.ToInt32(faces[i].Age);
+
+                    Dictionary<float, string> detectedEmotion = GetEmotions(emotions[i]);
+
+                    // Acquire keys and sort them.
+                    var list = detectedEmotion.Keys.ToList();
+                    list.Sort();
+
+                    // Loop through keys.
+                    //foreach (var key in list)
+                    //{
+                    //    Debug.WriteLine("{0}: {1}", key, detectedEmotion[key]);
+                    //}
+
+
+                    age.Text = faces[i].Gender + ", " + predictedAge + ", " + detectedEmotion[list.Last()];
+                    age.Margin = new Thickness(faces[i].FaceRect.Left * scale, (faces[i].FaceRect.Top * scale) - 20, faces[i].FaceRect.Height * scale, faces[i].FaceRect.Width * scale);
+                    age.Foreground = (i == 0 ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.DeepSkyBlue));
+                    //Add grid to canvas containing all face UI objects 
+                    FacesCanvas.Children.Add(faceBoundingBox);
+                    FacesCanvas.Children.Add(age);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("No faces identified");
+            }
+        }
+``` 
+
+* Last step, we need to call DetectEmotions in the BrowseButton_Click method.
+
+```csharp
+//Detect emotions
+Emotion[] emotions = await DetectEmotions(t.AsStream());
+DrawFaces(faces, emotions);
+``` 
+       
