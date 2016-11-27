@@ -6,7 +6,7 @@ This sample app provides an example on how to use the Face and Emotion APIs from
 * If you haven't already, install Visual Studio 2015. 
 In Visual Studio, on the File menu, click New Project.
 In the Installed Templates list, select C# as your programming language and choose the Blank Application template.
-Name the Project and press enter.
+Name the project as you wish and press enter to create it.
 
 * First let's create the interface. In MainPage.xaml replace the automatically generated Gris with this RelativePanel.
 
@@ -57,6 +57,16 @@ Name the Project and press enter.
     </RelativePanel>
     
 ```
-
 As you can see we have a simple interface with a banner and a button for choosing a picture. 
-For the banner we need the MicrosoftLogo. Simply create a new folder, call it "Images", and copy there the microsoftLogo.png, which you can find in this repo.
+For the banner we need the Microsoft logo. Simply create a new folder, call it "Images", and copy there the microsoftLogo.png, which you can find in this repo.
+
+* Let's add now the FaceDetection libray to our project. In Solution Explorer, right click on References and choose Manage NuGet Packages. 
+Click the Browse tab, search for Microsoft.Project.Oxford.Face, select that package in the list, and click Install.
+
+In MainPage.xaml.cs reference the library 
+```csharp
+// Use the following namespace for FaceServiceClient
+using Microsoft.ProjectOxford.Face;
+```
+
+
