@@ -4,9 +4,9 @@ This sample app provides an example on how to use the Face and Emotion APIs from
 ## Step-by-Step - How to Add Face and Emotion Detection to a UWP App
 
 * If you haven't already, install Visual Studio 2015. 
-* In Visual Studio, on the *File* menu, click *New Project*. In the *Installed Templates* list, select C# as your programming language and choose the *Blank Application* template. Name the project as you wish and press enter to create it.
+* In Visual Studio, on the **File** menu, click **New Project**. In the **Installed Templates** list, select C# as your programming language and choose the **Blank Application** template. Name the project as you wish and press enter to create it.
 
-* First let's create the interface. In *MainPage.xaml* replace the automatically generated Grid with this RelativePanel.
+* First let's create the interface. In **MainPage.xaml** replace the automatically generated Grid with this RelativePanel.
 
 ```csharp
    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -56,17 +56,17 @@ This sample app provides an example on how to use the Face and Emotion APIs from
 ```
 
 * As you can see we have a simple interface with a banner and a button for choosing a picture. 
-For the banner we need the Microsoft logo. Simply create a new folder, call it *Images*, and copy there the *microsoftLogo.png*, which you can find in this repo.
+For the banner we need the Microsoft logo. Simply create a new folder, call it **Images**, and copy there the **microsoftLogo.png**, which you can find in this repo.
 
-* Let's add now the *FaceDetection* client libray to our project. In Solution Explorer, right click on *References* and choose *Manage NuGet Packages*. 
-Click the *Browse* tab, search for Microsoft.Project.Oxford.Face*, select that package in the list, and click *Install*.
+* Let's add now the **FaceDetection** client libray to our project. In Solution Explorer, right click on **References** and choose **Manage NuGet Packages**. 
+Click the **Browse** tab, search for **Microsoft.Project.Oxford.Face**, select that package in the list, and click **Install**.
 
-* In *MainPage.xaml.cs* reference the library 
+* In **MainPage.xaml.cs** reference the library 
 ```csharp
 using Microsoft.ProjectOxford.Face;
 ```
 
-* Create a new folder and name it *ViewModels*. Right click on it and add a *New Item*. Choose *Class* from the list and name it *MyFaceModel.cs*. In the newly created class reference again the *Microsoft.ProjectOxford.Face* library and add the following Face attributes:
+* Create a new folder and name it **ViewModels**. Right click on it and add a **New Item**. Choose **Class** from the list and name it **MyFaceModel.cs**. In the newly created class reference again the **Microsoft.ProjectOxford.Face** library and add the following Face attributes:
 
 ```csharp
 class MyFaceModel
@@ -77,13 +77,13 @@ class MyFaceModel
         public object Gender { get; internal set; }
 }
 ```
-* Back in the MainWindow class insert the following code: 
+* Back in the **MainWindow** class insert the following code: 
 ```csharp 
 private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient("Your subscription key"); 
 ``` 
 * Please set the subscription key from your account. You can sign up [here](https://www.microsoft.com/cognitive-services/en-us/sign-up)
 
-* Insert the following code inside the MainWindow class for the 'Browse' button 
+* Insert the following code inside the **MainWindow** class for the **Browse** button 
 
 ```csharp
 
@@ -123,7 +123,7 @@ private async void BrowseButton_Click(object sender, RoutedEventArgs e)
 private double scale;
 ```
 
-* Now we can create the method DetectFaces. The most straightforward way to detect faces is by calling the Face - Detect API by uploading the image file directly. When using the client library, this can be done by using an asynchronous method DetectAsync of FaceServiceClient. 
+* Now we can create the method **DetectFaces**. The most straightforward way to detect faces is by calling the Face - Detect API by uploading the image file directly. When using the client library, this can be done by using an asynchronous method **DetectAsync** of **FaceServiceClient**. 
 
 ```csharp
         private async Task<List<MyFaceModel>> DetectFaces(Stream imageStream)
@@ -159,7 +159,7 @@ private double scale;
             return collection;
         }
 ```
-* Let's replace now the //TODO comment in the BrowseButton_Click method with the following code snippet. We're basically calling the DetectFaces and the DrawFaces methods after the user chose the picture to analyse.
+* Let's replace now the **//TODO** comment in the **BrowseButton_Click** method with the following code snippet. We're basically calling the **DetectFaces** and the **DrawFaces** methods after the user chose the picture to analyse.
 
 ```csharp
 //Remove any existing rectangles from previous events 
@@ -172,7 +172,7 @@ var t = await file.OpenAsync(FileAccessMode.Read);
 DrawFaces(faces);
 ```
 
-* We can now create the method DrawFaces to mark the faces in the image
+* We can now create the method **DrawFaces** to mark the faces in the image
 
 ```csharp
         /// <summary>
@@ -223,22 +223,22 @@ DrawFaces(faces);
 
 ```
 
-* We can run the program and test it. We're able now to browse for a photo and display it in the window. The faces in the picture are automatically detected and marked.
+* We can run the program and test it. We are able now to browse for a photo and display it in the window. The faces in the picture are automatically detected and marked.
 
 * Next step is to detect also the emotions of the people in this photo.  
 
-* First of all we need to reference to add the nuget package for Emotion to the project and add the reference to it in the MainWindow class.
+* First of all we need to add the NuGet package for **Emotion** to the project and add the reference to it in the **MainWindow** class.
 
 ```csharp
 using Microsoft.ProjectOxford.Emotion.Contract;
 ``` 
 
-* Insert the following code in the MainWindow class and replace the text with your subscription key. 
+* Insert the following code in the **MainWindow** class and replace the text with your subscription key. 
 ```csharp
 private readonly EmotionServiceClient emotionServiceClient = new EmotionServiceClient("Your subscription key");  
 ``` 
 
-* We add a method DetectEmotions 
+* We add a method **DetectEmotions** 
 ```csharp
         private async Task<Emotion[]> DetectEmotions(Stream imageStream)
         {
@@ -255,7 +255,7 @@ private readonly EmotionServiceClient emotionServiceClient = new EmotionServiceC
         }
 ``` 
 
-* We only want the emotion with the highest probability, that's why we implet a method GetEmotion which returns the most likely idetnified emotion.
+* We only want the emotion with the highest probability, that's why we implement a method **GetEmotion** which returns the most likely identified emotion.
 ```csharp
 private Dictionary<float,string> GetEmotions(Emotion emotion)
         {
@@ -273,7 +273,7 @@ private Dictionary<float,string> GetEmotions(Emotion emotion)
         }
 ``` 
 
-* Let's modify the DrawFaces method so it also displays the recognized emotions.
+* Let's modify the **DrawFaces** method so it also displays the recognized emotions.
 
 ```csharp
         private void DrawFaces(List<MyFaceModel> faces, Emotion[] emotions)
@@ -332,7 +332,7 @@ private Dictionary<float,string> GetEmotions(Emotion emotion)
         }
 ``` 
 
-* Last step, we need to call DetectEmotions in the BrowseButton_Click method.
+* Last step, we need to call **DetectEmotions** in the **BrowseButton_Click** method.
 
 ```csharp
 //Detect emotions
