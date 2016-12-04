@@ -1,4 +1,4 @@
-# face-detection
+# Workshop Cognitive Services and Microsoft Bot Framework - Technical Summit 2016
 This sample app provides an example on how to use the Face and Emotion APIs from Cognitive Services 
 
 ## Step-by-Step - How to Add Face and Emotion Detection to a UWP App
