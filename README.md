@@ -81,7 +81,7 @@ class MyFaceModel
 ```csharp 
 private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient("Your subscription key"); 
 ``` 
-<**Note** Please set the subscription key from your account. You can sign up [here](https://www.microsoft.com/cognitive-services/en-us/sign-up)
+>**Note** Please set the subscription key from your account. You can sign up [here](https://www.microsoft.com/cognitive-services/en-us/sign-up)
 
 * Insert the following code inside the **MainWindow** class for the **Browse** button 
 
