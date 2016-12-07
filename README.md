@@ -4,7 +4,7 @@ This sample app provides an example on how to use the Face and Emotion APIs from
 ## Step-by-Step - How to Add Face and Emotion Detection to a UWP App
 
 * If you haven't already, install Visual Studio 2015. 
-* In Visual Studio, on the **File** menu, click **New Project**. In the **Installed Templates** list, select **C#** as your programming language and choose the **Blank Application** template. Name the project as you wish and press enter to create it.
+* In Visual Studio, on the <kbd>File<kbd> menu, click <kbd>New Project<kbd>. In the **Installed Templates** list, select **C#** as your programming language and choose the **Blank Application** template. Name the project as you wish and press enter to create it.
 
 * First let's create the interface. In **MainPage.xaml** replace the automatically generated Grid with this RelativePanel.
 
@@ -81,7 +81,7 @@ class MyFaceModel
 ```csharp 
 private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient("Your subscription key"); 
 ``` 
->**Note** Please set the subscription key from your account. You can sign up [here](https://www.microsoft.com/cognitive-services/en-us/sign-up)
+>**Note** Please replace the text with your subscription key. You can sign up [here](https://www.microsoft.com/cognitive-services/en-us/sign-up) to get access to it.
 
 * Insert the following code inside the **MainWindow** class for the **Browse** button 
 
