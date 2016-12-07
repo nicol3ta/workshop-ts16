@@ -1,10 +1,18 @@
 # Workshop Cognitive Services and Microsoft Bot Framework - Technical Summit 2016
 This sample app provides an example on how to use the Face and Emotion APIs from Cognitive Services 
 
+1. **Bot Lab**
+
+Please follow the instructions described in the Word document to get started with [Microsoft Bot Framework](https://dev.botframework.com/). 
+
+2. **Cognitive Services Lab**
+
+The FaceEmotion sample app provides an example on how to use the Face and Emotion APIs from Cognitive Services.
+
 ## Step-by-Step - How to Add Face and Emotion Detection to a UWP App
 
 * If you haven't already, install Visual Studio 2015. 
-* In Visual Studio, on the <kbd>File<kbd> menu, click <kbd>New Project<kbd>. In the **Installed Templates** list, select **C#** as your programming language and choose the **Blank Application** template. Name the project as you wish and press enter to create it.
+* In Visual Studio, on the <kbd>File</kbd> menu, click <kbd>New Project</kbd>. In the **Installed Templates** list, select **C#** as your programming language and choose the **Blank Application** template. Name the project as you wish and press enter to create it.
 
 * First let's create the interface. In **MainPage.xaml** replace the automatically generated Grid with this RelativePanel.
 
