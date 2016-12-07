@@ -1,11 +1,21 @@
 # Workshop Cognitive Services and Microsoft Bot Framework - Technical Summit 2016
-This sample app provides an example on how to use the Face and Emotion APIs from Cognitive Services 
+This workshop helps you get started with Microsoft Bot Framework and Cognitive Services.  
 
-## 1. Bot Lab
+## 1. Setup
+
+You must perform the following steps to prepare your computer for this lab:
+*	Install Microsoft Windows 10.
+*	Install Microsoft Visual Studio 2015.
+*	Update all VS extensions to their latest versions
+*	Install the [Bot Application Template](http://aka.ms/bf-bc-vstemplate)
+*	Save in you VS template directory "%USERPROFILE%\Documents\Visual Studio 2015\Templates\ProjectTemplates\Visual C#"
+*	Install the [Bot Framework Emulator](https://aka.ms/bf-bc-emulator)
+
+## 2. Bot Lab
 
 Please follow the instructions described in the [Word document](https://github.com/nicol3ta/workshop-ts16/blob/master/BotLab/Lab01_CogServicesDDBotLab.docx) to get started with [Microsoft Bot Framework](https://dev.botframework.com/). 
 
-## 2. Cognitive Services Lab
+## 3. Cognitive Services Lab
 
 The [FaceEmotion](https://github.com/nicol3ta/workshop-ts16/tree/master/FaceEmotion) sample app provides an example on how to use the Face and Emotion APIs from Cognitive Services.
 
